@@ -1,4 +1,4 @@
-package armorments;
+package types;
 
 import javafx.animation.*;
 
@@ -10,22 +10,22 @@ import java.util.ArrayList;
 
 public enum Weapon 	{
 	
-	GUN_8MM("8mm",	new Ammo[] {Ammo.AP_8MM, null}, 12, true, 120, 6, 1, 1),
-	GUN_12MM("12mm",	new Ammo[] {Ammo.AP_12MM,	null}, 5, true, 100, 7, 1, 1),
-	CANNON_20MM("20mm",	new Ammo[] {Ammo.AP_20MM,	Ammo.HE_20MM}, 4, true, 8,	 1,	1.5, 1.125),
-	CANNON_20MM_CHAIN("20mm Belt-fed", new Ammo[] {Ammo.AP_20MM, Ammo.HE_20MM},	4, true, 64, 7.5, 1, 0.9),
-	CANNON_30MM("30mm", new Ammo[] {Ammo.AP_30MM,	Ammo.HE_30MM}, 3, true, 8, 1.5,	1, 1),
-	CANNON_40MM("40mm", new Ammo[] {Ammo.AP_40MM,	Ammo.HE_40MM}, 2, true, 4, 1.75, 1.125, 1),
-	CANNON_75MM("75mm", new Ammo[] {Ammo.AP_75MM,	Ammo.HE_75MM}, (1/4), false,	0, 4,	1.125, 1.1),
-	CANNON_75MM_AUTO("75mm Auto", new Ammo[] {Ammo.AP_75MM,	Ammo.HE_75MM}, 1.5, true, 3, 3.375,	0.875, 0.8),
-	CANNON_80MM("80mm", new Ammo[] {Ammo.AP_80MM,	Ammo.HE_80MM}, (1/3), false,	0, 3,	1.2, 1.2),
-	CANNON_80MM_AUTO("80mm Auto",	new Ammo[] {Ammo.AP_80MM,	Ammo.HE_80MM}, 1, true, 5, 7.5,	1, 0.9),
-	CANNON_90MM("90mm", new Ammo[] {Ammo.AP_90MM,	Ammo.HE_90MM}, (1/2), false,	0, 2,	1, 1.375),
-	CANNON_90MM_AUTO("90mm Auto", new Ammo[] {Ammo.AP_90MM,	Ammo.HE_90MM}, 1.75, true, 5, 5, 0.875, 0.98),
-	CANNON_120MM("120mm", new Ammo[] {Ammo.AP_120MM,Ammo.HE_120MM},	(1/4), false,	0, 4,	1, 1.125),
-	CANNON_130MM("130mm", new Ammo[] {Ammo.AP_130MM,Ammo.HE_130MM},	(1/6), false,	0, 6,	1, 1),
-	CANNON_150MM("150mm Howitzer", new Ammo[] {Ammo.AP_150MM,Ammo.HE_150MM}, (1/3), true, 4, 8, 1, 0.875),
-	PLACE_HOLDER("No Weapon",new Ammo[] {},0,false,0,0,0,0);
+	GUN_8MM("8mm",	new AmmoType[] {AmmoType.AP_8MM, null}, 12, true, 120, 6, 1, 1),
+	GUN_12MM("12mm",	new AmmoType[] {AmmoType.AP_12MM,	null}, 5, true, 100, 7, 1, 1),
+	CANNON_20MM("20mm",	new AmmoType[] {AmmoType.AP_20MM,	AmmoType.HE_20MM}, 4, true, 8,	 1,	1.5, 1.125),
+	CANNON_20MM_CHAIN("20mm Belt-fed", new AmmoType[] {AmmoType.AP_20MM, AmmoType.HE_20MM},	4, true, 64, 7.5, 1, 0.9),
+	CANNON_30MM("30mm", new AmmoType[] {AmmoType.AP_30MM,	AmmoType.HE_30MM}, 3, true, 8, 1.5,	1, 1),
+	CANNON_40MM("40mm", new AmmoType[] {AmmoType.AP_40MM,	AmmoType.HE_40MM}, 2, true, 4, 1.75, 1.125, 1),
+	CANNON_75MM("75mm", new AmmoType[] {AmmoType.AP_75MM,	AmmoType.HE_75MM}, (1/4), false,	0, 4,	1.125, 1.1),
+	CANNON_75MM_AUTO("75mm Auto", new AmmoType[] {AmmoType.AP_75MM,	AmmoType.HE_75MM}, 1.5, true, 3, 3.375,	0.875, 0.8),
+	CANNON_80MM("80mm", new AmmoType[] {AmmoType.AP_80MM,	AmmoType.HE_80MM}, (1/3), false,	0, 3,	1.2, 1.2),
+	CANNON_80MM_AUTO("80mm Auto",	new AmmoType[] {AmmoType.AP_80MM,	AmmoType.HE_80MM}, 1, true, 5, 7.5,	1, 0.9),
+	CANNON_90MM("90mm", new AmmoType[] {AmmoType.AP_90MM,	AmmoType.HE_90MM}, (1/2), false,	0, 2,	1, 1.375),
+	CANNON_90MM_AUTO("90mm Auto", new AmmoType[] {AmmoType.AP_90MM,	AmmoType.HE_90MM}, 1.75, true, 5, 5, 0.875, 0.98),
+	CANNON_120MM("120mm", new AmmoType[] {AmmoType.AP_120MM,AmmoType.HE_120MM},	(1/4), false,	0, 4,	1, 1.125),
+	CANNON_130MM("130mm", new AmmoType[] {AmmoType.AP_130MM,AmmoType.HE_130MM},	(1/6), false,	0, 6,	1, 1),
+	CANNON_150MM("150mm Howitzer", new AmmoType[] {AmmoType.AP_150MM,AmmoType.HE_150MM}, (1/3), true, 4, 8, 1, 0.875),
+	PLACE_HOLDER("No Weapon",new AmmoType[] {},0,false,0,0,0,0);
 	
 	public final double fireRate;					// shots per second
 	public final boolean hasMagazine;			// quick to load the next round, slower to change the magazine
@@ -33,12 +33,12 @@ public enum Weapon 	{
 	public final double reloadTime; 				// time to reload the magazine
 	public final double damageMultiplier;	// base damage multiplier; better differentiates AP vs HE
 	public final double velocityMultiplier;// base velocity multiplier; differentiation between cannon types
-	private Ammo[] shoots = new Ammo[2];		// what ammo the weapon object shoots
+	private AmmoType[] shoots = new AmmoType[2];		// what ammo the weapon object shoots
 	public final String displayName;				// the name visible to the player
 	private final ReloadTimerThread rt;
 	private boolean isReloading;
 	
-	private Weapon(String displayName, Ammo[] shoots, double fireRate, boolean hasMag, int magCap, double reloadTime, double damageMultiplier, double velocityMultiplier) {
+	private Weapon(String displayName, AmmoType[] ammoTypes, double fireRate, boolean hasMag, int magCap, double reloadTime, double damageMultiplier, double velocityMultiplier) {
 		this.displayName = displayName;
 		this.shoots = shoots;
 		this.fireRate = fireRate;
@@ -62,9 +62,6 @@ public enum Weapon 	{
 	public int getMagazineCapacity() {
 		return this.magazineCapacity;
 	}
-	public int getMagCap() {
-		return this.getMagazineCapacity();
-	}
 	
 	public double getReloadTime() {
 		return this.reloadTime;
@@ -87,11 +84,11 @@ public enum Weapon 	{
 		return this.velocityMultiplier;
 	}
 	
-	public Ammo getAPAmmo() {
-		return (this==PLACE_HOLDER)? Ammo.AP_PLACE_HOLDER:this.shoots[0];
+	public AmmoType getAPAmmo() {
+		return (this==PLACE_HOLDER)? AmmoType.AP_PLACE_HOLDER:this.shoots[0];
 	}
-	public Ammo getHEAmmo() {
-		return (this==PLACE_HOLDER)? Ammo.HE_PLACE_HOLDER:this.shoots[1];
+	public AmmoType getHEAmmo() {
+		return (this==PLACE_HOLDER)? AmmoType.HE_PLACE_HOLDER:this.shoots[1];
 	}
 	
 	public String getName() {
@@ -121,14 +118,6 @@ public enum Weapon 	{
 	
 	public boolean reload() {
 		
-		try {
-			this.isReloading = true;
-			rt.run();
-		}catch(ReloadingException e) {
-			System.out.println(e+" Weapon: \""+this.displayName+"\"");
-		}catch(ReloadFinished e) {
-			return this.isReloading = false;
-		}
 		return false;
 	}
 	public boolean isReloading() {

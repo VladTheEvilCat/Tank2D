@@ -1,12 +1,12 @@
 package application;
 
-import armorments.*;
 import player.Player;
+//import types.*;
 
-public interface CombatEvent {
+public interface MotionEvent {
 	
-	public Vehicle hit(Player p, Ammo shell);
-	public Vehicle shoot(Player p, int wIndex);
+	// public Vehicle hit(Player p, Ammo shell);
+	// public Vehicle shoot(Player p, int wIndex);
 	
 	public void moved(Player p);
 	public void moveUp(Player p);

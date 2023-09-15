@@ -3,9 +3,6 @@ package application;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import armorments.Vehicle;
-//import application.CombatEvent;
-import armorments.Weapon;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -24,6 +21,8 @@ import javafx.scene.text.Text;
 //import armorments.*;
 
 import player.Player;
+import types.Vehicle;
+import types.Weapon;
 
 public class Controller implements Initializable{
 	

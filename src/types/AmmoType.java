@@ -1,6 +1,6 @@
-package armorments;
+package types;
 
-public enum Ammo {
+public enum AmmoType {
 	
 	AP_8MM(8,16,1200),
 	AP_12MM(16,32,1150),
@@ -32,21 +32,21 @@ public enum Ammo {
 	AP_150MM(250,150,750),
 	HE_150MM(96,275,500),
 	
-	AP_PLACE_HOLDER(0,0,0),
-	HE_PLACE_HOLDER(0,0,0);
+	PLACE_HOLDER(0,0,0);
 	
 	
-	//private final double 
-	//private final double pen;
+	// private final double pen;
 	public final double armorDamage;
 	public final double damage;
 	public final double baseVelocity;
-	public final String displayName;
-	
-	private Ammo(double armorDamage, double damage, double baseVelocity) {
-		this.baseVelocity = baseVelocity;
+	public final String type;
+
+	AmmoType(double armorDamage, double damage, double baseVelocity) {
+    this.baseVelocity = baseVelocity;
 		this.armorDamage = armorDamage;
 		this.damage = damage;
-		this.displayName = this.name().substring(0,2);
+		this.type = this.name().substring(0,2);
 	}
+
+  
 }

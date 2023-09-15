@@ -1,4 +1,4 @@
-package armorments;
+package types;
 
 
 import java.io.File;
@@ -15,22 +15,23 @@ import javafx.scene.text.Text;
 import com.mgnt.utils.TimeUtils;
 
 
-public enum Vehicle implements CombatEvent{
-	DEFAULT_TANK_A(Weapon.CANNON_90MM_AUTO, Weapon.GUN_12MM,Weapon.PLACE_HOLDER,65.0,12.0,120.0,100.0,new int[][] {{100,20},{10,0}}),
+public enum Vehicle implements VehicleMotion{
+	DEFAULT_TANK_A(Weapon.CANNON_75MM, Weapon.GUN_12MM,Weapon.PLACE_HOLDER,65.0,12.0,120.0,100.0,new int[][] {{100,20},{10,0}}),
 	DEFAULT_TANK_B(Weapon.CANNON_90MM, Weapon.GUN_12MM,Weapon.PLACE_HOLDER,65.0,12.0,120.0,100.0,new int[][] {{90,15},{10,0}}),
 	LIGHT_TANK(Weapon.CANNON_75MM_AUTO, Weapon.GUN_8MM,Weapon.PLACE_HOLDER,70.0,15.0,100.0,50.0,new int[][] {{125,25},{20,0}}),
 	MEDIUM_TANK(Weapon.CANNON_90MM, Weapon.GUN_12MM,Weapon.PLACE_HOLDER,50.0,10,150.0,120.0,new int[][] {{75,25},{12,0}}),
 	HEAVY_TANK(Weapon.CANNON_120MM, Weapon.GUN_12MM, Weapon.CANNON_20MM_CHAIN,50.0,8.5,180.0,200.0,new int[][] {{80,20},{10,0},{6,0}});
 	
+  public final Weapon[][] guns;
 	public final Weapon mainGun;
 	public final Weapon secondaryGun;
 	public final Weapon tertiaryGun;
 	
 	public final double maxSpeed;
-	private double speed;
+	//private double speed;
 	public final double acceleration;
 	public final double maxRotationSpeed;
-	private double rotationSpeed;
+	//private double rotationSpeed;
 	public final double rotationAcceleration;
 	
 	private final double maxHealth;
@@ -39,9 +40,9 @@ public enum Vehicle implements CombatEvent{
 	private double armor;
 	
 	private int[][] ammoCount;
-	private Ammo selectedPrimAmmo;
-	private Ammo selectedSecAmmo;
-	private Ammo selectedTertAmmo;
+	private AmmoTypes selectedPrimAmmo;
+	private AmmoTypes selectedSecAmmo;
+	private AmmoTypes selectedTertAmmo;
 	public final int maxPrimAP;
 	public final int maxPrimHE;
 	public final int maxSecAP;
@@ -68,14 +69,14 @@ public enum Vehicle implements CombatEvent{
 	
 	private Point2D pos;
 	
-	File audioFile = new File("src/sounds/med-gunshot.wav");
+	/*File audioFile = new File("src/sounds/med-gunshot.wav");
 	String audioPath = audioFile.toURI().toString();
 	MediaPlayer m = new MediaPlayer(new Media(audioPath));
+	*/
 	
 	
-	
-	private Vehicle(Weapon main, Weapon secondary, Weapon tertiary, double maxSpeed, double acceleration, double maxHealth, double maxArmor, int[][] ammoCounts) {
-		m.setStopTime(m.getTotalDuration());
+	private Vehicle(Weapon[][] guns, Weapon secondary, Weapon tertiary, double maxSpeed, double acceleration, double maxHealth, double maxArmor, int[][] ammoCounts) {
+		/*m.setStopTime(m.getTotalDuration());
 		
 		this.mainGun = main;
 		this.secondaryGun = secondary;
@@ -95,10 +96,10 @@ public enum Vehicle implements CombatEvent{
 		
 		this.maxTertAP = (ammoCounts.length==3)? ammoCounts[2][0]:0;
 		this.maxTertHE = (ammoCounts.length==3)? ammoCounts[2][1]:0;
-		
+		*/
 		
 		this.maxSpeed = maxSpeed;
-		this.speed = 0;
+		//this.speed = 0;
 		this.acceleration = acceleration;
 		this.maxRotationSpeed = 100*(acceleration/maxSpeed);
 		this.rotationAcceleration = maxSpeed/acceleration;
@@ -109,6 +110,15 @@ public enum Vehicle implements CombatEvent{
 		this.armor = maxArmor;
 	}
 	private Vehicle(Weapon main, Weapon secondary, double maxSpeed, double acceleration, double maxHealth, double maxArmor, int[][] ammoCounts) {
+		this(main,secondary,Weapon.PLACE_HOLDER,maxSpeed,acceleration,maxHealth,maxArmor,
+			new int[][] {
+				{ammoCounts[0][0],ammoCounts[0][1]},
+				{ammoCounts[1][0],ammoCounts[1][1]},
+				{0,0}
+			}
+		);
+	}
+  private Vehicle(Weapon[][] guns, double maxSpeed, double acceleration, double maxHealth, double maxArmor, int[][] ammoCounts) {
 		this(main,secondary,Weapon.PLACE_HOLDER,maxSpeed,acceleration,maxHealth,maxArmor,
 			new int[][] {
 				{ammoCounts[0][0],ammoCounts[0][1]},
@@ -164,19 +174,19 @@ public enum Vehicle implements CombatEvent{
 	public Weapon[] getWeapons() {
 		return new Weapon[] {this.mainGun,this.secondaryGun,this.tertiaryGun};
 	}
-	public Ammo getPrimSelectedAmmo() {
+	public AmmoTypes getPrimSelectedAmmo() {
 		return this.selectedPrimAmmo;
 	}
 	public int getPrimSelectedAmmoAsIndex() {
 		return (getPrimSelectedAmmo().displayName.equals("AP"))? 0:1;
 	}
-	public Ammo getSecSelectedAmmo() {
+	public AmmoTypes getSecSelectedAmmo() {
 		return this.selectedSecAmmo;
 	}
 	public int getSecSelectedAmmoAsIndex() {
 		return (getSecSelectedAmmo().displayName.equals("AP"))? 0:1;
 	}
-	public Ammo getTertSelectedAmmo() {
+	public AmmoTypes getTertSelectedAmmo() {
 		return this.selectedTertAmmo;
 	}
 	public int getTertSelectedAmmoAsIndex() {
@@ -314,7 +324,7 @@ public enum Vehicle implements CombatEvent{
 	*/
 	
 	@Override
-	public Vehicle hit(Player p, Ammo shell) {
+	public Vehicle hit(Player p, AmmoTypes shell) {
 		if((shell.armorDamage-p.getVehicle().getArmor())>0)
 			p.getVehicle().addHealth((-(shell.damage/shell.armorDamage)));
 		p.getVehicle().addArmor((-(shell.armorDamage-p.getVehicle().getArmor())));

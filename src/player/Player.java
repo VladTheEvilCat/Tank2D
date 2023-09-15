@@ -1,8 +1,7 @@
 package player;
 
-//import application.CombatEvent;
-import armorments.*;
 import javafx.geometry.Point2D;
+import types.*;
 
 public class Player {
 	
